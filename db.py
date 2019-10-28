@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
+from models.base import Base
 import os
 
 
@@ -19,8 +20,7 @@ class DB:
         elif env == "production":
             db_uri = os.environ.get("DATABASE_URL", "")
             engine = create_engine(db_uri) #postgres
-            meta = MetaData()
-            meta.create_all(engine)
+            Base.metadata.create_all(engine)
         else:
             raise Exception("environment not available")
 
