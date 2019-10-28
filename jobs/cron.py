@@ -23,12 +23,12 @@ def cron_job():
                 }
                 
             top = deserializer(requests.get(BASE_URL, params=payload))
-            final_lst = []
+            ##final_lst = []
             
             if key == "artist":
                 first_key = "top" + key + "s"
                 top_item = top[first_key][key]
-                for next_item in top_item:
+                '''for next_item in top_item:
                     value_dic={
                         "tag":item['name'],
                         "artist_rank":next_item['@attr']['rank'],
@@ -39,7 +39,7 @@ def cron_job():
                         }
 
                     final_lst.append(value_dic)
-                result = artist(db, final_lst)
+                result = artist(db, final_lst)'''
                 db_session.add_all(
                         [Artist(tag=item['name'], artist_rank = next_item['@attr']['rank'], artist_mbid = next_item.get('mbid','None'),
                         artist_name = next_item['name'], streamable = next_item['streamable'], url = next_item['url']) 
