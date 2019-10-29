@@ -1,12 +1,9 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from jobs.cron import cron_job
 
-sched = BackgroundScheduler()
-
-@sched.scheduled_job('cron', day_of_week='tue', hour = 2)
-def scheduled_job():
-    print("Running cron job")
+def run_cron_job():
     cron_job()
-    print("Finished cron job")
 
+sched = BackgroundScheduler(daemon=True)
+sched.add_job(run_cron_job, 'cron', day_of_week='tue', hour=3, minute=15)
 sched.start()

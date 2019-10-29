@@ -16,6 +16,7 @@ class DB:
         engine = None
         if env == "development":
             engine = create_engine("sqlite:///music.db", echo = True, connect_args={'check_same_thread': False}) #sqlite
+            Base.metadata.create_all(engine)
 
         elif env == "production":
             db_uri = os.environ.get("DATABASE_URL", "")
