@@ -10,3 +10,13 @@ sched.start()
 
 if __name__ == '__main__':
     run_cron_job()'''
+
+from apscheduler.schedulers.background import BackgroundScheduler
+
+sched = BackgroundScheduler()
+
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=3, minute=55)
+def scheduled_job():
+    print('This job is run every weekday at 5pm.')
+
+sched.start()

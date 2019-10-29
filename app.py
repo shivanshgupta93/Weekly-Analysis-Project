@@ -14,7 +14,7 @@ def run_cron_job():
     cron_job()
 
 sched = BackgroundScheduler(daemon=True)
-sched.add_job(run_cron_job, 'cron', day_of_week='tue', hour=3, minute=35)
+sched.add_job(run_cron_job, 'cron', day_of_week='tue', hour=3, minute=55)
 sched.start()
 
 
