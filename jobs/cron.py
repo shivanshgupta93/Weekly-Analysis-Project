@@ -3,6 +3,8 @@ import requests
 from consts import *
 from db import DB
 from models.artist import Artist
+from models.album import Album
+from models.track import Track
 from middlewares.deserializer import deserializer
 
 db_obj = DB()
@@ -56,10 +58,10 @@ def cron_job():
                         )
                     db_session.commit()
 
-            ''' if key == "album":
+                if key == "album":
                     first_key = key + "s"
                     top_item = top[first_key][key]
-                    for next_item in top_item:
+                    '''for next_item in top_item:
                         value_dic={
                             "tag":item['name'],
                             "album_rank":next_item['@attr']['rank'],
@@ -71,12 +73,20 @@ def cron_job():
                             "url":next_item['url']
                         }
                         final_lst.append(value_dic)
-                    result = album(db, final_lst)
+                    result = album(db, final_lst)'''
+                    db_session.add_all(
+                            [Album(tag=item['name'], album_rank = next_item['@attr']['rank'], album_name = next_item['name'], 
+                            album_mbid=next_item.get('mbid','None'), artist_name = next_item['artist']['name'], 
+                            artist_mbid = next_item['artist'].get('mbid','None'),
+                            artist_url = next_item['artist']['url'], url = next_item['url']) 
+                            for next_item in top_item]
+                        )
+                    db_session.commit()
 
                 if key == "track":
                     first_key = key + "s"
                     top_item = top[first_key][key]
-                    for next_item in top_item:
+                    '''for next_item in top_item:
                         value_dic={
                             "tag":item['name'],
                             "track_rank":next_item['@attr']['rank'],
@@ -91,3 +101,13 @@ def cron_job():
                         }
                         final_lst.append(value_dic)
                     result = track(db, final_lst)'''
+                    db_session.add_all(
+                            [Track(tag=item['name'], track_rank = next_item['@attr']['rank'], track_name = next_item['name'], 
+                            track_mbid=next_item.get('mbid','None'), track_duration=int(next_item.get('duration','0')),
+                            artist_name = next_item['artist']['name'], 
+                            artist_mbid = next_item['artist'].get('mbid','None'),
+                            artist_url = next_item['artist']['url'], streamable=next_item['streamable']['fulltrack'], 
+                            url = next_item['url']) 
+                            for next_item in top_item]
+                        )
+                    db_session.commit()

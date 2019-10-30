@@ -1,12 +1,7 @@
-from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.background import BlockingScheduler
 from jobs.cron import cron_job
 
-def run_cron_job():
-    cron_job()
-
-sched = BackgroundScheduler(daemon=True)
-sched.add_job(run_cron_job, 'cron', day_of_week='mon-fri', hour=6)
+###sched = BlockingScheduler(daemon=True)
+sched = BlockingScheduler()
+sched.add_job(cron_job, 'cron', day_of_week='wed', hour=8, minute=0)
 sched.start()
-
-while __name__ == '__main__':
-    pass

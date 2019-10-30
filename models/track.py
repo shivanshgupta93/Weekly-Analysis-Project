@@ -1,29 +1,23 @@
-from sqlalchemy import MetaData, Table, Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime
+from models.base import Base
 import datetime
 
-def track(db, track):
-    meta = MetaData()
-    track_table = Table('track', meta,
-    Column('id',Integer, primary_key = True),
-    Column('tag', String),
-    Column('track_rank', String),
-    Column('track_name', String),
-    Column('track_mbid', String),
-    Column('track_duration', Integer),
-    Column('artist_name', String),
-    Column('artist_mbid', String),
-    Column('artist_url', String),
-    Column('streamable',String),
-    Column('url', String),
-    Column('inserted_date', DateTime(), default = datetime.datetime.now)
-    )
 
-    track_table.create(db, checkfirst=True)
+class Track(Base):
+    __tablename__ = 'track'
 
-    track_ins = track_table.insert(None).values(track)
-    con = db.connect()
-    result = con.execute(track_ins)
+    id = Column(Integer, primary_key=True)
+    tag = Column(String)
+    track_rank = Column(String)
+    track_name = Column(String)
+    track_mbid = Column(String)
+    track_duration = Column(Integer)
+    artist_name = Column(String)
+    artist_mbid = Column(String)
+    artist_url = Column(String)
+    streamable = Column(String)
+    url = Column(String)
+    inserted_date = Column(DateTime(), default=datetime.datetime.now)
 
-    return result
-
-
+    def __repr__(self):
+        return "<Track (tag='%s',track_rank='%s',track_name ='%s',track_mbid ='%s',track_duration='%s',artist_name='%s',artist_mbid='%s',artist_url='%s',streamable='%s',url='%s', inserted_date='%s' )" % (self.tag, self.track_rank, self.track_name, self.track_mbid, self.track_duration, self.artist_name, self.artist_mbid, self.artist_url, self.streamable, self.url, self.inserted_date)
