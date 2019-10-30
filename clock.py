@@ -1,4 +1,4 @@
-from apscheduler.schedulers.background import BlockingScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 from jobs.cron import cron_job
 
 ###sched = BlockingScheduler(daemon=True)
