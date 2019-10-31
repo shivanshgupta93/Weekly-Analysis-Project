@@ -10,11 +10,11 @@ from middlewares.deserializer import deserializer
 db_obj = DB()
 db_session = db_obj.get_db()
 
-run_cron = os.environ.get("run_cron_job", 1)
+run_cron = int(os.environ.get("run_cron_job", 1))
 print(run_cron)
 
 def cron_job():
-    if True:
+    if run_cron == 1:
         tags_payload = {
             "method": "tag.getTopTags",
             "api_key": API_KEY,
