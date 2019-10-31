@@ -6,13 +6,13 @@ from models.track import Track
 from middlewares.serializer import serialize
 
 db_obj = DB()
+db_session = db_obj.get_db()
 
 api = Blueprint("api", __name__, url_prefix="/api")
 
 @api.route("/artists")
 
 def artists():
-    db_session = db_obj.get_db()
     artists = db_session.query(Artist).all()
     return serialize(artists)
 
@@ -20,7 +20,6 @@ def artists():
 @api.route("/albums")
 
 def albums():
-    db_session = db_obj.get_db()
     albums = db_session.query(Album).all()
     return serialize(albums)
 
@@ -28,6 +27,5 @@ def albums():
 @api.route("/tracks")
 
 def tracks():
-    db_session = db_obj.get_db()
     tracks = db_session.query(Track).all()
     return serialize(tracks)
