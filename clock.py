@@ -3,11 +3,13 @@ from jobs.cron import cron_job
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('cron',day_of_week=3,hour=1,minute=38)
+@sched.scheduled_job('cron',day_of_week=3,hour=2,minute=0)
 def scheduled_job():
-    print("Running clock file")
     try:
+        print("Running clock file")
+        print("Starting cron job")
         cron_job()
+        print("Ran cron job")
     except Exception as e: 
         print(e)
 
