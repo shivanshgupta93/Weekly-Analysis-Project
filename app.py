@@ -10,12 +10,7 @@ app = Flask(__name__, template_folder='static')
 
 app.register_blueprint(api)
 
-def run_cron_job():
-    cron_job()
-
-sched = BlockingScheduler()
-sched.add_job(run_cron_job, 'cron', day_of_week=3, hour=0, minute=27)
-sched.start()
+cron_job()
 
 
 @app.route("/")
