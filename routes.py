@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from db import DB
 from models.artist import Artist
 from models.album import Album
@@ -13,9 +13,16 @@ api = Blueprint("api", __name__, url_prefix="/api")
 @api.route("/artists")
 
 def artists():
-    artists = db_session.query(Artist).all()
+    id = request.args.get('id')
+    tag = request.args.get('tag')
+    artists = db_session.query(Artist).filter(Artist.id==id, Artist.tag==tag)
     return serialize(artists)
 
+@api.route("/artists/all")
+
+def all_artists():
+    artists = db_session.query(Artist).all()
+    return serialize(artists)
 
 @api.route("/albums")
 

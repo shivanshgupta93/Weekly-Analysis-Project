@@ -3,7 +3,7 @@
 (function ($) {
     console.log($);
     $(document).ready(() => {
-        $.get("/api/artists", (artists, err) => {
+        $.get("/api/artists/all", (artists, err) => {
             if (err !== "success") console.error(err);
             if (artists && Array.isArray(artists.data)) {
                 const tags = [...new Set(artists.data.map(artist => artist.tag))] // function(artist) {return artist.tag}
