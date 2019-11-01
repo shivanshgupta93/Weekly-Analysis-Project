@@ -3,7 +3,7 @@ from jobs.cron import cron_job
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('cron',day_of_week=4,hour=6,minute=2)
+@sched.scheduled_job('cron',day_of_week=4,hour=21,minute=20)
 def scheduled_job():
     try:
         print("Running clock file")

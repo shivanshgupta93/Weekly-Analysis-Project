@@ -10,7 +10,7 @@ app.register_blueprint(api)
 
 '''sched = BackgroundScheduler()
 
-sched.add_job(cron_job,'cron',day_of_week=4,hour=1,minute=52)
+sched.add_job(cron_job,'cron',day_of_week=4,hour=17,minute=8)
 
 sched.start()'''
 
