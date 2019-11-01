@@ -52,8 +52,8 @@ def artists():
 @api.route("/artists/all")
 
 def all_artists():
-    artists = db_session.query(Artist).all()
-    return serialize(artists)
+    artists_all = db_session.query(Artist).all()
+    return serialize(artists_all)
 
 @api.route("/albums")
 
@@ -91,17 +91,55 @@ def albums():
 @api.route("/albums/all")
 
 def all_albums():
-    albums = db_session.query(Album).all()
-    return serialize(albums)
+    albums_all = db_session.query(Album).all()
+    return serialize(albums_all)
 
 @api.route("/tracks")
 
 def tracks():
-    tracks = db_session.query(Track).all()
+    id_start = request.args.get('id_start')
+    id_end = request.args.get('id_end')
+    tag = request.args.get('tag')
+    rank = request.args.get('rank')
+    duration_start = request.args.get('duration_start')
+    duration_end = request.args.get('duration_end')
+    if tag:
+        if duration_start and not rank:
+            if duration_end:
+                tracks = db_session.query(Track).filter(Track.tag == tag, Track.track_duration >= duration_start, Track.track_duration <= duration_end)
+            else:
+                tracks = db_session.query(Track).filter(Track.tag == tag, Track.track_duration >= duration_start)
+        elif not duration_start and not rank:
+            if duration_end:
+                tracks = db_session.query(Track).filter(Track.tag == tag, Track.track_duration <= duration_end)
+            else:
+                tracks = db_session.query(Track).filter(Track.tag == tag)
+        if rank and not duration_start:
+            if id_start:
+                if id_end:
+                    tracks = db_session.query(Track).filter(Track.tag == tag, Track.track_rank == rank, Track.id >= id_start, Track.id <= id_end)
+                else:
+                    tracks = db_session.query(Track).filter(Track.tag == tag, Track.track_rank == rank, Track.id >= id_start)
+            else:
+                if id_end:
+                    tracks = db_session.query(Track).filter(Track.tag == tag, Track.track_rank == rank, Track.id <= id_end)
+                else:
+                    tracks = db_session.query(Track).filter(Track.tag == tag, Track.track_rank == rank)
+        elif not rank and not duration_start:
+            if id_start:
+                if id_end:
+                    tracks = db_session.query(Track).filter(Track.tag == tag, Track.id >= id_start, Track.id <= id_end)
+                else:
+                    tracks = db_session.query(Track).filter(Track.tag == tag, Track.id >= id_start)
+            else:
+                if id_end:
+                    tracks = db_session.query(Track).filter(Track.tag == tag, Track.id <= id_end)
+                else:
+                    tracks = db_session.query(Track).filter(Track.tag == tag)
     return serialize(tracks)
 
 @api.route("/tracks/all")
 
 def all_tracks():
-    tracks = db_session.query(Track).all()
-    return serialize(tracks)
+    tracks_all = db_session.query(Track).all()
+    return serialize(tracks_all)
