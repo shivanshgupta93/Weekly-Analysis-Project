@@ -20,10 +20,11 @@ def cron_job():
             "api_key": API_KEY,
             "format": "json"    
         }
+        i=0
         top_tags = deserializer(requests.get(BASE_URL, params=tags_payload))
         tags_lst = top_tags['toptags']['tag']
         db_session.add_all(
-                            [Tag(tag=item['name']) 
+                            [Tag(tag=item['name'],tag_rank=i+1) 
                             for item in tags_lst[:15]]
                         )
         db_session.commit()

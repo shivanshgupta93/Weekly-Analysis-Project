@@ -13,7 +13,7 @@ api = Blueprint("api", __name__, url_prefix="/api")
 
 @api.route("/tags")
 def tags():
-    tags = db_session.query(Tag).distinct(Tag.tag)
+    tags = db_session.query(Tag).all()
     return serialize(tags)
 
 @api.route("/artists")

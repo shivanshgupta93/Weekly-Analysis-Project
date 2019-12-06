@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, Date
 from models.base import Base
 import datetime
 
@@ -17,7 +17,7 @@ class Track(Base):
     artist_url = Column(String)
     streamable = Column(String)
     url = Column(String)
-    inserted_date = Column(DateTime(), default=datetime.datetime.now)
+    inserted_date = Column(Date(), default=datetime.datetime.now().date())
 
     def __repr__(self):
         return "<Track (tag='%s',track_rank='%s',track_name ='%s',track_mbid ='%s',track_duration='%s',artist_name='%s',artist_mbid='%s',artist_url='%s',streamable='%s',url='%s', inserted_date='%s' )" % (self.tag, self.track_rank, self.track_name, self.track_mbid, self.track_duration, self.artist_name, self.artist_mbid, self.artist_url, self.streamable, self.url, self.inserted_date)

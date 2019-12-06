@@ -2,17 +2,22 @@
 
 (function ($) {
     console.log($);
+    document.getElementById("selectGenre").onchange = function(){
+        var selIndex = document.getElementById("selectGenre").selectedIndex;
+        var selValue = document.getElementById("selectGenre").options[selIndex].innerHTML;
+        };
     $(document).ready(() => {
         $.get("/api/artists/all", (artists, err) => {
             if (err !== "success") console.error(err);
             if (artists && Array.isArray(artists.data)) {
                 const tags = [...new Set(artists.data.map(artist => artist.tag))] // function(artist) {return artist.tag}
+                const insert_dates = [...new Set(artists.data.map(artist => artist.inserted_date))]
                 const data = tags.map(tag => artists.data.filter(artist => artist.tag == tag).length)
                 const ctx = document.getElementById('artists').getContext('2d');
                 const artists_chart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: tags,
+                        labels: insert_dates,
                         datasets: [{
                             label: 'Artists based on tags',
                             data: data,
@@ -54,6 +59,19 @@
                         }
                     }
                 });
+            }
+        });
+        $.get("/api/tags", (tags, err) => {
+            if (err !== "success") console.error(err);
+            if (tags && Array.isArray(tags.data)) {
+                const tags_array = [...new Set(tags.data.map(tags => tags.tag))]
+                var dropdown = document.getElementById('selectGenre');
+                for (var i = 0; i<=tags_array.length; i++){
+                    var opt = document.createElement('option');
+                    opt.value = tags_array[i];
+                    opt.innerHTML = tags_array[i];
+                    dropdown.appendChild(opt);
+                }
             }
         });
     });

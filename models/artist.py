@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, Date
 from models.base import Base
 import datetime
 
@@ -13,7 +13,7 @@ class Artist(Base):
     artist_name = Column(String)
     streamable = Column(String)
     url = Column(String)
-    inserted_date = Column(DateTime(), default=datetime.datetime.now)
+    inserted_date = Column(Date(), default=datetime.datetime.now().date())
 
     def __repr__(self):
         return "<Artist (tag='%s', artist_rank='%s', artist_mbid='%s', artist_name='%s', streamable='%s', url='%s', inserted_date='%s' )" % (self.tag, self.artist_rank, self.artist_mbid, self.artist_name, self.streamable, self.url, self.inserted_date)
