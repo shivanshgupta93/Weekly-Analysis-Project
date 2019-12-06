@@ -36,7 +36,6 @@ function artists(tag_value){
             const insert_dates = [...new Set(artists.data.map(artist => artist.inserted_date))]
             const data = insert_dates.map(inserted_date => artists.data.filter(artist => artist.inserted_date == inserted_date).length)
             const ctx = document.getElementById('artists').getContext('2d');
-            ctx.clearRect(0,0,canvas.width,canvas.height);
             console.log(data);
             var artists_chart = null;
             artists_chart.destroy();
