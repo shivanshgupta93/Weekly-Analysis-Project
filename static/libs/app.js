@@ -38,7 +38,9 @@ function artists(tag_value){
             const ctx = document.getElementById('artists').getContext('2d');
             ctx.clearRect(0,0,canvas.width,canvas.height);
             console.log(data);
-            const artists_chart = new Chart(ctx, {
+            var artists_chart = null;
+            artists_chart.destroy();
+            artists_chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: insert_dates,
