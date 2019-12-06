@@ -27,11 +27,12 @@ document.getElementById("selectGenre").onchange = function(){
         artists(selValue);
     };
 
-function artists(tag_value){
+    var artists_chart = null;
+
+    function artists(tag_value){
     $.get("/api/artists?tag="+tag_value, (artists, err) => {
         if (err !== "success") console.error(err);
         console.log(tag_value);
-        var artists_chart = null;
         if (artists && Array.isArray(artists.data)) {
             const tags = [...new Set(artists.data.map(artist => artist.tag))] // function(artist) {return artist.tag}
             const insert_dates = [...new Set(artists.data.map(artist => artist.inserted_date))]
