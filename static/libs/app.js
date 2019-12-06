@@ -34,7 +34,7 @@ function artists(tag_value){
         if (artists && Array.isArray(artists.data)) {
             const tags = [...new Set(artists.data.map(artist => artist.tag))] // function(artist) {return artist.tag}
             const insert_dates = [...new Set(artists.data.map(artist => artist.inserted_date))]
-            const data = tags.map(tag => artists.data.filter(artist => artist.tag == tag).length)
+            const data = tags.map(tag => artists.data.filter(artist => artist.tag == tag_value).length)
             const ctx = document.getElementById('artists').getContext('2d');
             console.log(data);
             const artists_chart = new Chart(ctx, {
