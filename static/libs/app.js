@@ -31,13 +31,13 @@ function artists(tag_value){
     $.get("/api/artists?tag="+tag_value, (artists, err) => {
         if (err !== "success") console.error(err);
         console.log(tag_value);
+        var artists_chart = null;
         if (artists && Array.isArray(artists.data)) {
             const tags = [...new Set(artists.data.map(artist => artist.tag))] // function(artist) {return artist.tag}
             const insert_dates = [...new Set(artists.data.map(artist => artist.inserted_date))]
             const data = insert_dates.map(inserted_date => artists.data.filter(artist => artist.inserted_date == inserted_date).length)
             const ctx = document.getElementById('artists').getContext('2d');
             console.log(data);
-            var artists_chart = null;
             if(artists_chart!=null){
                 artists_chart.destroy();
             }
