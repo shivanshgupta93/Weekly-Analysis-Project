@@ -1,0 +1,164 @@
+@import "https://fonts.googleapis.com/css?family=Montserrat";
+* body{
+  background-color: #F5f5f5;
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+}
+
+.container {
+  text-align: center;
+}
+
+.container .logo {
+  height: 80px;
+  align-items: center;
+
+  }
+.wrapper2{
+    display: flex;
+    flex-flow: row;
+    margin-bottom: 0px;
+}
+
+.imagediv {
+  height: 100px;
+  width: 11% auto;
+  text-align: right;
+  background-color: inherit;
+  margin-left: 600px;
+}
+
+.hdiv {
+  flex-grow: 1;
+  width : 89% auto;
+  text-align: left;
+  margin-top: 9px;
+  margin-left: 10px;
+  background-color: inherit;
+
+}
+
+.logo {
+  margin-top: 8px;
+  max-height: 85px;
+  margin-left: 49px auto;
+}
+
+h2{
+  font-weight: bolder;
+  font-size: 30px;
+  margin-top: 30% auto;
+  /*margin-left: 5% auto;*/
+    color: black;
+}
+nav {
+  background-color: #202020;
+  margin: 0px 0px 10px 0px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+
+}
+
+nav .home {
+  margin: 70px;
+  color: white;
+  text-transform: capitalize;
+}
+
+nav .aboutus {
+  float: right;
+  margin-right: 70px;
+  color: white;
+  text-transform: capitalize;
+}
+
+.querybar {
+  background-color: #202020;
+  border-radius: 20px;
+  margin: 5px 5px 5px 5px;
+  text-align: center;
+  padding: 5px;
+}
+.querybar select {
+  color: black;
+  padding: 2px;
+  padding-left:5px;
+  width: 250px;
+  border: none;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  outline: none;
+  text-align: center;
+}
+
+.query1, .query3, .query2 {
+  font-style: italic;
+  text-transform: uppercase;
+  color: white;
+
+}
+
+.listwraper {
+  display: flex;
+  flex-flow: row;
+  height: 80px;
+  margin-bottom: 10px;
+  margin-top: 25px;
+  width: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.list2, .list3, .list1 {
+flex-grow: 1;
+text-align: center;
+width: 30%;
+border-style:solid;
+border-color:black;
+margin-top: 5px;
+margin-left: 5px;
+background-color: #FFF8DC;
+}
+
+.list1 ul li,.list2 ul li,.list3 ul li {
+display: inline-block;
+text-align: center;
+}
+
+.topheading{
+  font-weight: bolder;
+}
+
+.wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 2%;
+    margin-top: 2%;
+    margin-right: 2%;
+    border-bottom: solid black 3px;
+    margin-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.img1,.img2,.img3,.img4 {
+  width: 50%;
+  height: 400px;
+  text-align: center;
+  margin-bottom: 10px;
+
+}
+.imga {
+  max-width: 90%;
+  max-height: 85%;
+}
+
+p {
+  text-align: center;
+}
+
+footer{
+  margin-top: 5px;
+  text-align: center;
+  margin-bottom: 15px;
+}

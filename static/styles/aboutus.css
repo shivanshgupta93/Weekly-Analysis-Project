@@ -1,0 +1,71 @@
+@import "https://fonts.googleapis.com/css?family=Montserrat";
+* body {
+  margin: 0;
+
+  }
+
+.sidebyside{
+
+      display: flex;
+      flex-flow: row;
+      height: 500px;
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-bottom: 40px;
+  }
+
+.aboutproject {
+    height: 500px;
+    width: 48%;
+    border-width:2px;
+    border-style:solid;
+    border-color:black;
+    margin: 15px;
+  }
+
+.aboutteam {
+  flex-grow: 1;
+  height: 500px;
+  width: 48%;
+  border-width:2px;
+  border-style:solid;
+  border-color:black;
+  margin: 15px;
+}
+
+.member1,.member2,.member3{
+  border-width:1px;
+  border-style:solid;
+  border-color:black;
+  margin-top: 5px;
+}
+
+.aboutteam ul li{
+  display: inline-block;
+}
+li .pic1, .pic2, .pic3 {
+    max-height: 75px;
+  }
+h3 {
+  text-align: center;
+}
+
+.abouttext{
+  padding: 20px;
+}
+
+/*.aboutproject{
+width:48%
+}
+
+.aboutteam{
+width:48%
+}*/
+
+footer{
+  border-top: solid black 3px;
+  padding-top: 25px;
+  text-align: center;
+  padding-bottom: 15px;
+  margin-bottom: 0%;
+}

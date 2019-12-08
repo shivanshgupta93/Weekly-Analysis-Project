@@ -25,8 +25,93 @@ document.getElementById("selectGenre").onchange = function(){
         var selValue = document.getElementById("selectGenre").options[selIndex].innerHTML;
         console.log(selValue);
         artists(selValue);
+        topartist(selValue);
+        topalbum(selValue);
+        toptrack(selValue);
     };
 
+    function topartist(tag_value)
+    {
+        $.get("/api/artists?rank=1&tag="+tag_value, (top_artists, err) => {
+            if (err !== "success") console.error(err);
+            if (top_artists && Array.isArray(top_artists.data)) {
+                var insert_dates = []
+                var artist_name = ""
+                const clockContainer=document.querySelector(".topartistdata")
+                for(var i=0; i<top_artists.data.length; i++)
+                    {
+                        insert_dates.push(top_artists.data[i]["inserted_date"])
+                    }
+                    insert_dates.sort();
+                
+                for(var i=0; i<top_artists.data.length; i++)
+                {
+                    if((top_artists.data[i]["inserted_date"] == insert_dates[0]))
+                        {
+                            artist_name = top_artists.data[i]["artist_name"]
+                        }
+                }
+
+                clockContainer.innerText = artist_name;
+            }
+        });
+    }
+    function topalbum(tag_value)
+    {
+        $.get("/api/albums?rank=1&tag="+tag_value, (top_albums, err) => {
+            if (err !== "success") console.error(err);
+            if (top_albums && Array.isArray(top_albums.data)) {
+                var insert_dates = []
+                var album_name = ""
+                var artist_name = ""
+                const clockContainer=document.querySelector(".topalbumdata")
+                for(var i=0; i<top_albums.data.length; i++)
+                    {
+                        insert_dates.push(top_albums.data[i]["inserted_date"])
+                    }
+                    insert_dates.sort();
+                
+                for(var i=0; i<top_albums.data.length; i++)
+                {
+                    if((top_albums.data[i]["inserted_date"] == insert_dates[0]))
+                        {
+                            album_name = top_albums.data[i]["album_name"]
+                            artist_name = top_albums.data[i]["artist_name"]
+                        }
+                }
+
+                clockContainer.innerText = album_name + " by " + artist_name;
+            }
+        });
+    }
+    function toptrack(tag_value)
+    {
+        $.get("/api/tracks?rank=1&tag="+tag_value, (top_tracks, err) => {
+            if (err !== "success") console.error(err);
+            if (top_tracks && Array.isArray(top_tracks.data)) {
+                var insert_dates = []
+                var track_name = ""
+                var artist_name = ""
+                const clockContainer=document.querySelector(".toptrackdata")
+                for(var i=0; i<top_tracks.data.length; i++)
+                    {
+                        insert_dates.push(top_tracks.data[i]["inserted_date"])
+                    }
+                    insert_dates.sort();
+                
+                for(var i=0; i<top_tracks.data.length; i++)
+                {
+                    if((top_tracks.data[i]["inserted_date"] == insert_dates[0]))
+                        {
+                            track_name = top_tracks.data[i]["track_name"]
+                            artist_name = top_tracks.data[i]["artist_name"]
+                        }
+                }
+
+                clockContainer.innerText = track_name + " by " + artist_name;
+            }
+        });
+    }
     var artists_chart = null;
 
     function artists(tag_value){

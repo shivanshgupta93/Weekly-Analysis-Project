@@ -1,30 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html lang="en" dir="ltr">
+  <head>
+   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Music Charts</title>
-    <link rel="stylesheet" href="/static/styles/style.css">
+	<title>Spotify Data Analysis</title>
+    <link rel="stylesheet" href="/static/styles/index.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.0/dist/Chart.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            <div id="dropdown">
-                    <form id="myForm">
-                            <select id="selectGenre"></select>
-                         </form>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column">
-                <canvas id="artists" width="400" height="400"></canvas>
-            </div>
-            <div class="column"></div>
+  </head>
+  <body>
+
+    <div class="wrapper2">
+      <div class="imagediv">
+          <img src="/static/images/spotify.png" alt="" class="logo">
+      </div>
+      <div class="hdiv">
+        <h2> SPOTIFY DESIGN ANALYSIS </h2>
+      </div>
+    </div>
+    <div class="bar">
+      <nav>
+
+        <a href="/static/index.html" class="home">Home</a>
+        <a href="/static/aboutus.html" class="aboutus">About Us</a>
+
+      </nav>
+    </div>
+    <div class="querybar">
+        <div class="queryform">
+			<select id="selectGenre">
+				<option>Choose a Genre</option>
+			</select>
         </div>
     </div>
-    <script src="/static/libs/app.js"></script>    
-</body>
+
+    <div class="listwraper">
+      <div class="list1">
+          <ul>
+            <li>
+                <div class="topheading">The Top Artist:</div>
+                <div class="topartistdata">Select a Genre</div>
+            </li>
+          </ul>
+      </div>
+      <div class="list2">
+        <ul>
+            <li>
+                <div class="topheading">The Top Album:</div>
+                <div class="topalbumdata">Select a Genre</div>
+            </li>
+        </ul>
+      </div>
+      <div class="list3">
+        <ul>
+            <li>
+                <div class="topheading">The Top Track:</div>
+                <div class="toptrackdata">Select a Genre</div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      <div class="img1">
+		<p>Data line</p>
+        <canvas id="artists"></canvas>
+      </div>
+      <div class="img2">
+        <p>Data line</p>
+        <canvas id="albums"></canvas>
+      </div>
+      <div class="img3">
+	    <p>Data line</p>
+        <canvas id="albums"></canvas>
+      </div>
+      <div class="img4">
+        <p>Data line</p>
+        <canvas id="albums"></canvas>
+      </div>
+    </div>
+    <footer> @DataProgramming 2019</footer>
+	<script src="/static/libs/app.js"></script>
+	
+  </body>
 </html>
