@@ -145,7 +145,7 @@ document.getElementById("selectGenre").onchange = function(){
             }
         });
     }
-    var artists_chart = null;
+    var chart = null;
 
     function artists(tag_value){
     $.get("/api/artists?tag="+tag_value, (artists, err) => {
@@ -179,12 +179,12 @@ document.getElementById("selectGenre").onchange = function(){
                 //artists_ranks.borderWidth = "50px"
                 ranks.push(artists_ranks)
             }
-            line_chart(artists_chart, ctx, insert_dates, ranks)
+            line_chart(ctx, insert_dates, ranks)
         }
     });
 }
 
-function line_chart(chart, ctx, data_labels, dataset){
+function line_chart(ctx, data_labels, dataset){
     if(chart!=null){
         chart.destroy();
     }
