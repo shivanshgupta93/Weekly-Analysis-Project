@@ -25,22 +25,22 @@
   width: 11% auto;
   text-align: right;
   background-color: inherit;
-  margin-left: 600px;
+  margin-left: 492px;
 }
 
 .hdiv {
   flex-grow: 1;
   width : 89% auto;
   text-align: left;
-  margin-top: 9px;
+  margin-top: 7px;
   margin-left: 10px;
   background-color: inherit;
-
+  font-size: larger;
 }
 
 .logo {
   margin-top: 8px;
-  max-height: 85px;
+  max-height: 90px;
   margin-left: 49px auto;
 }
 
@@ -52,28 +52,56 @@ h2{
     color: black;
 }
 nav {
-  background-color: #202020;
   margin: 0px 0px 10px 0px;
   padding-bottom: 5px;
-  padding-top: 5px;
-
 }
 
-nav .home {
-  margin: 70px;
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+nav li {
+  float: left;
+}
+
+nav li a {
+  display: block;
   color: white;
-  text-transform: capitalize;
+  text-align: center;
+  padding: 5px 50px;
+  text-decoration: none;
+  font-size: large;
 }
 
-nav .aboutus {
+nav li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.date{
   float: right;
-  margin-right: 70px;
+  display: block;
   color: white;
-  text-transform: capitalize;
+  text-align: center;
+  padding: 5px 50px;
+  text-decoration: none;
+  font-weight: bold;
+  padding-top: 28px;
+  padding-right: 100px;
+  font-size: large;
 }
+
+.bar{
+  margin-left:4px;
+  margin-right:4px;
+}
+
 
 .querybar {
-  background-color: #202020;
+  background-color: #333;
   border-radius: 20px;
   margin: 5px 5px 5px 5px;
   text-align: center;
@@ -89,6 +117,7 @@ nav .aboutus {
   -webkit-appearance: button;
   outline: none;
   text-align: center;
+  font-size: medium;
 }
 
 .query1, .query3, .query2 {
@@ -146,7 +175,6 @@ text-align: center;
   height: 550px;
   text-align: center;
   margin-bottom: 10px;
-
 }
 .imga {
   max-width: 90%;

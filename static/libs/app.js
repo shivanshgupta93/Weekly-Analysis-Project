@@ -33,6 +33,14 @@ $(document).ready(() => {
         artiststracks();
         tracks(first_tag);
         artists(first_tag);
+        var d = new Date();
+        var date = d.getDate();
+        var year = d.getFullYear();
+        var month = d.getMonth();
+        var monthArr = ["January", "February","March", "April", "May", "June", "July", "August", "September", "October", "November","December"];
+        month = monthArr[month];
+        const datediv = document.querySelector(".date")
+        datediv.innerText = date+" "+month+", "+year;
     });
 document.getElementById("selectGenre").onchange = function(){
         var selIndex = document.getElementById("selectGenre").selectedIndex;
@@ -172,14 +180,14 @@ document.getElementById("selectGenre").onchange = function(){
                         datasets.push(artists.data[i]["artist_rank"])
                     }
                 }
-                var randomcolor = colors[j]
+
                 artists_ranks.label = artists_name[j]
                 artists_ranks.data = datasets
                 artists_ranks.fill = false
                 artists_ranks.lineTension = 0
                 artists_ranks.radius = 5
-                artists_ranks.backgroundColor = randomcolor
-                artists_ranks.borderColor = randomcolor
+                artists_ranks.backgroundColor = colors[j+4]
+                artists_ranks.borderColor = colors[j+4]
                 artists_ranks.steppedLine = true
                 //artists_ranks.borderWidth = "50px"
                 ranks.push(artists_ranks)
@@ -274,8 +282,8 @@ function tracks(tag_value){
 
             tracks_count.label = "Duration of Tracks"
             tracks_count.data = tracks_duration_datsets
-            tracks_count.backgroundColor = colors.slice(1,5)
-            tracks_count.borderColor = colors.slice(1,5)
+            tracks_count.backgroundColor = colors.slice(4,9)
+            tracks_count.borderColor = colors.slice(4,9)
             tracks_count.borderWidth = [1,1,1,1,1]
 
             duration_counts.push(tracks_count)
@@ -354,8 +362,8 @@ function toptracksbyartists(artist_names, latest_insert_date){
             var artist_track_count = {}
             artist_track_count.label = ""
             artist_track_count.data = artist_count
-            artist_track_count.backgroundColor = colors.slice(1,artist_names.length)
-            artist_track_count.borderColor = colors.slice(1,artist_names.length)
+            artist_track_count.backgroundColor = colors.slice(4,4+artist_names.length)
+            artist_track_count.borderColor = colors.slice(4,4+artist_names.length)
             artist_track_count.borderWidth = 1
 
             artist_track_datasets.push(artist_track_count)

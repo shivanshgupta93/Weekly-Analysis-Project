@@ -21,6 +21,7 @@
     border-style:solid;
     border-color:black;
     margin: 15px;
+    background-color: #efeeec;
   }
 
 .aboutteam {
@@ -31,6 +32,7 @@
   border-style:solid;
   border-color:black;
   margin: 15px;
+  background-color: #efeeec;
 }
 
 .member1,.member2,.member3{
@@ -61,16 +63,14 @@ h3 {
 }
 
 .abouttext{
-  padding: 20px;
+  padding: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-/*.aboutproject{
-width:48%
+.aboutheading{
+  font-size: large;
 }
-
-.aboutteam{
-width:48%
-}*/
 
 footer{
   border-top: solid black 3px;
