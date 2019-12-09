@@ -30,6 +30,8 @@ $(document).ready(() => {
             }
             first_tag = tags_array[0];
         }),
+        artiststracks();
+        tracks(first_tag);
         artists(first_tag);
     });
 document.getElementById("selectGenre").onchange = function(){
@@ -37,6 +39,7 @@ document.getElementById("selectGenre").onchange = function(){
         var selValue = document.getElementById("selectGenre").options[selIndex].innerHTML;
         console.log(selValue);
         artists(selValue);
+        tracks(selValue);
         topartist(selValue);
         topalbum(selValue);
         toptrack(selValue);
@@ -145,7 +148,9 @@ document.getElementById("selectGenre").onchange = function(){
             }
         });
     }
-    var chart = null;
+    var line_chart = null;
+    var doughnut_chart = null;
+    var bar_chart = null;
 
     function artists(tag_value){
     $.get("/api/artists?tag="+tag_value, (artists, err) => {
@@ -153,7 +158,7 @@ document.getElementById("selectGenre").onchange = function(){
         if (artists && Array.isArray(artists.data)) {
             const insert_dates = [...new Set(artists.data.map(artist => artist.inserted_date))]
             const artists_name = [...new Set(artists.data.map(artist => artist.artist_name))]
-            const ctx = document.getElementById('artists').getContext('2d');
+            const artist_ctx = document.getElementById('artists').getContext('2d');
             var artists_ranks = []
             var ranks = []
             for (var j=0; j<artists_name.length; j++)
@@ -179,16 +184,16 @@ document.getElementById("selectGenre").onchange = function(){
                 //artists_ranks.borderWidth = "50px"
                 ranks.push(artists_ranks)
             }
-            line_chart(ctx, insert_dates, ranks)
+            create_line_chart(artist_ctx, insert_dates, ranks)
         }
     });
 }
 
-function line_chart(ctx, data_labels, dataset){
-    if(chart!=null){
-        chart.destroy();
+function create_line_chart(ctx, data_labels, dataset){
+    if(line_chart!=null){
+        line_chart.destroy();
     }
-    chart = new Chart(ctx, {
+    line_chart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: data_labels,
@@ -216,5 +221,190 @@ function line_chart(ctx, data_labels, dataset){
                 position:"bottom"
             }
         }
+    });
+}
+
+function tracks(tag_value){
+    $.get("/api/tracks?tag="+tag_value, (tracks, err) => {
+        if (err !== "success") console.error(err);
+        if (tracks && Array.isArray(tracks.data)) {
+            var insert_dates = [...new Set(tracks.data.map(track => track.inserted_date))]
+            insert_dates.sort();
+            var latest_insert_date = insert_dates[0]
+            var duration_groups = ["0 - 150", "150 - 300", "300 - 450", "450 - 600", "600 +"]
+            var duration_counts = []
+            var zero150 = 0, five300 = 0, three450 =0, four600 = 0, sixplus = 0;
+            const duration_ctx = document.getElementById('trackduration').getContext('2d');
+
+            for (var i=0; i<tracks.data.length;i++)
+            {
+                if((tracks.data[i]["inserted_date"] == latest_insert_date))
+                {
+                    if(tracks.data[i]["track_duration"] >=0 && tracks.data[i]["track_duration"] <150)
+                    {
+                        zero150++
+                    }
+                    if(tracks.data[i]["track_duration"] >= 150 && tracks.data[i]["track_duration"] < 300)
+                    {
+                        five300++
+                    }
+                    if(tracks.data[i]["track_duration"] >=300 && tracks.data[i]["track_duration"] <450)
+                    {
+                        three450++
+                    }
+                    if(tracks.data[i]["track_duration"] >=450 && tracks.data[i]["track_duration"] <600)
+                    {
+                        four600++
+                    }
+                    if(tracks.data[i]["track_duration"] >=600)
+                    {
+                        sixplus++
+                    }
+
+                }
+            }
+
+            var tracks_count = {}
+            var tracks_duration_datsets = []
+            tracks_duration_datsets.push(zero150)
+            tracks_duration_datsets.push(five300)
+            tracks_duration_datsets.push(three450)
+            tracks_duration_datsets.push(four600)
+            tracks_duration_datsets.push(sixplus)
+
+            tracks_count.label = "Duration of Tracks"
+            tracks_count.data = tracks_duration_datsets
+            tracks_count.backgroundColor = colors.slice(1,5)
+            tracks_count.borderColor = colors.slice(1,5)
+            tracks_count.borderWidth = [1,1,1,1,1]
+
+            duration_counts.push(tracks_count)
+            create_doughnut_chart(duration_ctx, duration_groups, duration_counts)
+        
+        }
+    });
+}
+
+function create_doughnut_chart(ctx, data_labels, dataset){
+    if(doughnut_chart!=null){
+        doughnut_chart.destroy();
+    }
+    doughnut_chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: data_labels,
+            datasets: dataset
+        },
+        options: {
+            responsive: true,
+            title: {
+              display: false,
+              position: "top",
+              text: "Pie Chart",
+              fontSize: 18,
+              fontColor: "#111"
+            },
+            legend: {
+              display: true,
+              position: "bottom",
+              labels: {
+                fontColor: "#333",
+                fontSize: 16
+              }
+            }
+          }
+    });
+}
+
+function artiststracks()
+{
+    $.get("/api/artists/all", (artists, err) => {
+        if (err !== "success") console.error(err);
+        if (artists && Array.isArray(artists.data)) {
+            var insert_dates = [...new Set(artists.data.map(artist => artist.inserted_date))]
+            insert_dates.sort();
+            var latest_insert_date = insert_dates[0]
+            var artists_name = []
+            for(var i=0; i<artists.data.length;i++)
+            {
+                if((artists.data[i]["artist_rank"] == "1") && (artists.data[i]["inserted_date"] == latest_insert_date))
+                artists_name.push(artists.data[i]["artist_name"])
+            }
+            toptracksbyartists(artists_name)
+        }
+    });
+}
+
+function toptracksbyartists(artist_names){
+    $.get("/api/tracks/all", (tracks, err) => {
+        if (err !== "success") console.error(err);
+        if (tracks && Array.isArray(tracks.data)) {
+            var artist_track_datasets = []
+            var artist_count = []
+            const track_ctx = document.getElementById('tracks').getContext('2d');
+            for(var i=0; i<artist_names.length;i++)
+            {
+                var count = 0;
+                for (var j=0; j<tracks.data.length;j++)
+                {
+                    if((tracks.data[j]["artist_name"].toLowerCase() == artist_names[i].toLowerCase()))
+                    {
+                        count++
+                    }
+                }
+                artist_count.push(count)
+            }
+
+            var artist_track_count = {}
+            artist_track_count.label = ""
+            artist_track_count.data = artist_count
+            artist_track_count.backgroundColor = colors.slice(1,artist_names.length)
+            artist_track_count.borderColor = colors.slice(1,artist_names.length)
+            artist_track_count.borderWidth = 1
+
+            artist_track_datasets.push(artist_track_count)
+
+            create_bar_chart(track_ctx, artist_names, artist_track_datasets)
+
+        }
+    });
+}
+
+function create_bar_chart(ctx, data_labels, dataset){
+    if(bar_chart!=null){
+        bar_chart.destroy();
+    }
+    bar_chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data_labels,
+            datasets: dataset
+        },
+        options: {
+            responsive: true,
+            title: {
+              display: false,
+              position: "top",
+              text: "Bar Graph",
+              fontSize: 18,
+              fontColor: "#111"
+            },
+            legend: {
+              display: true,
+              position: "bottom",
+              labels: {
+                fontColor: "#333",
+                fontSize: 16,
+                display: false
+              }
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  min: 0
+                }
+              }]
+            }
+          }
     });
 }
