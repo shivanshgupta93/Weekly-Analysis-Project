@@ -1,5 +1,5 @@
 'use strict';
-
+Chart.defaults.global.legend.labels.usePointStyle = true;
 var colors = ["#000000", "#FFFF00", "#1CE6FF", "#FF34FF", "#FF4A46", "#008941", "#006FA6", "#A30059",
 "#FFDBE5", "#7A4900", "#0000A6", "#63FFAC", "#B79762", "#004D43", "#8FB0FF", "#997D87",
 "#5A0007", "#809693",  "#1B4400", "#4FC601", "#3B5DFF", "#4A3B53", "#FF2F80",
@@ -306,11 +306,7 @@ function create_doughnut_chart(ctx, data_labels, dataset){
             },
             legend: {
               display: true,
-              position: "bottom",
-              labels: {
-                fontColor: "#333",
-                fontSize: 16
-              }
+              position: "bottom"
             }
           }
     });
@@ -381,7 +377,21 @@ function create_bar_chart(ctx, data_labels, dataset){
             datasets: dataset
         },
         options: {
-            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    gridLines: {
+                        offsetGridLines: false
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        offsetGridLines: false
+                    }
+                }]
+            },
             title: {
               display: false,
               position: "top",
