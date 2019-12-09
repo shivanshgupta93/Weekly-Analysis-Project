@@ -8,14 +8,14 @@
 
       display: flex;
       flex-flow: row;
-      height: 500px;
+      height: 690px;
       margin-left: 10px;
       margin-right: 10px;
       margin-bottom: 40px;
   }
 
 .aboutproject {
-    height: 500px;
+    height: 700px;
     width: 48%;
     border-width:2px;
     border-style:solid;
@@ -25,7 +25,7 @@
 
 .aboutteam {
   flex-grow: 1;
-  height: 500px;
+  height: 700px;
   width: 48%;
   border-width:2px;
   border-style:solid;
@@ -37,14 +37,24 @@
   border-width:1px;
   border-style:solid;
   border-color:black;
-  margin-top: 5px;
+  margin-top: 6px;
+  margin-left:70px;
+  margin-right:70px;
+  text-align:center;
+  padding-left:80px;
+}
+
+.member3{
+  padding-left: 102px;
 }
 
 .aboutteam ul li{
-  display: inline-block;
+  display: table-row;
 }
 li .pic1, .pic2, .pic3 {
-    max-height: 75px;
+    height: 80px;
+    width: 80px;
+    border-radius: 60%;
   }
 h3 {
   text-align: center;
