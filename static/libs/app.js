@@ -330,12 +330,12 @@ function artiststracks()
                 if((artists.data[i]["artist_rank"] == "1") && (artists.data[i]["inserted_date"] == latest_insert_date))
                 artists_name.push(artists.data[i]["artist_name"])
             }
-            toptracksbyartists(artists_name)
+            toptracksbyartists(artists_name, latest_insert_date)
         }
     });
 }
 
-function toptracksbyartists(artist_names){
+function toptracksbyartists(artist_names, latest_insert_date){
     $.get("/api/tracks/all", (tracks, err) => {
         if (err !== "success") console.error(err);
         if (tracks && Array.isArray(tracks.data)) {
@@ -347,7 +347,7 @@ function toptracksbyartists(artist_names){
                 var count = 0;
                 for (var j=0; j<tracks.data.length;j++)
                 {
-                    if((tracks.data[j]["artist_name"].toLowerCase() == artist_names[i].toLowerCase()))
+                    if((tracks.data[j]["artist_name"].toLowerCase() == artist_names[i].toLowerCase()) && (tracks.data[j]["inserted_date"] == latest_insert_date))
                     {
                         count++
                     }
@@ -390,12 +390,11 @@ function create_bar_chart(ctx, data_labels, dataset){
               fontColor: "#111"
             },
             legend: {
-              display: true,
+              display: false,
               position: "bottom",
               labels: {
                 fontColor: "#333",
-                fontSize: 16,
-                display: false
+                fontSize: 16
               }
             },
             scales: {
