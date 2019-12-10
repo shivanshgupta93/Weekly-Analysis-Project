@@ -99,6 +99,20 @@ nav li a:hover:not(.active) {
   margin-right:4px;
 }
 
+.queryform ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.queryform li {
+  float: left;
+}
+
+.queryform{
+  margin-left: 500px;
+}
 
 .querybar {
   background-color: #333;
@@ -118,6 +132,14 @@ nav li a:hover:not(.active) {
   outline: none;
   text-align: center;
   font-size: medium;
+  margin-left: 6px;
+}
+
+.genreheading{
+  font-size: medium;
+  color: white;
+  margin-top: 1px;
+  font-weight: bold;
 }
 
 .query1, .query3, .query2 {
