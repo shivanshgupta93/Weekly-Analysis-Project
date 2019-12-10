@@ -1,5 +1,6 @@
 'use strict';
 Chart.defaults.global.legend.labels.usePointStyle = true;
+
 var colors = ["#000000", "#FFFF00", "#1CE6FF", "#FF34FF", "#FF4A46", "#008941", "#006FA6", "#A30059",
 "#FFDBE5", "#7A4900", "#0000A6", "#63FFAC", "#B79762", "#004D43", "#8FB0FF", "#997D87",
 "#5A0007", "#809693",  "#1B4400", "#4FC601", "#3B5DFF", "#4A3B53", "#FF2F80",
@@ -13,7 +14,9 @@ var colors = ["#000000", "#FFFF00", "#1CE6FF", "#FF34FF", "#FF4A46", "#008941", 
 "#7900D7", "#A77500", "#6367A9", "#A05837", "#6B002C", "#772600", "#D790FF", "#9B9700",
 "#549E79", "#FFF69F", "#201625", "#72418F", "#BC23FF", "#99ADC0", "#3A2465", "#922329",
 "#5B4534", "#FDE8DC", "#404E55", "#0089A3", "#CB7E98", "#A4E804", "#324E72", "#6A3A4C"];
+
 var first_tag;
+
 $(document).ready(() => {
         $.get("/api/tags", (tags, err) => {
             if (err !== "success") console.error(err);
@@ -30,6 +33,7 @@ $(document).ready(() => {
             }
             first_tag = tags_array[0];
         }),
+        artistsalbums();
         artiststracks();
         tracks(first_tag);
         artists(first_tag);
@@ -167,7 +171,7 @@ document.getElementById("selectGenre").onchange = function(){
             const insert_dates = [...new Set(artists.data.map(artist => artist.inserted_date))]
             const artists_name = [...new Set(artists.data.map(artist => artist.artist_name))]
             const artist_ctx = document.getElementById('artists').getContext('2d');
-            var artists_ranks = []
+            var artists_ranks = {}
             var ranks = []
             for (var j=0; j<artists_name.length; j++)
             {
@@ -345,6 +349,41 @@ function toptracksbyartists(artist_names, latest_insert_date){
         if (tracks && Array.isArray(tracks.data)) {
             var artist_track_datasets = []
             var artist_count = []
+            var options = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            offsetGridLines: false
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            offsetGridLines: false
+                        }
+                    }]
+                },
+                title: {
+                  display: false,
+                  position: "top",
+                  text: "Bar Graph",
+                  fontSize: 18,
+                  fontColor: "#111"
+                },
+                legend: {
+                  display: false,
+                  position: "bottom"
+                },
+                scales: {
+                  yAxes: [{
+                    ticks: {
+                      min: 0
+                    }
+                  }]
+                }
+              }
             const track_ctx = document.getElementById('tracks').getContext('2d');
             for(var i=0; i<artist_names.length;i++)
             {
@@ -368,60 +407,114 @@ function toptracksbyartists(artist_names, latest_insert_date){
 
             artist_track_datasets.push(artist_track_count)
 
-            create_bar_chart(track_ctx, artist_names, artist_track_datasets)
+            create_bar_chart(track_ctx, artist_names, artist_track_datasets, options)
 
         }
     });
 }
 
-function create_bar_chart(ctx, data_labels, dataset){
-    if(bar_chart!=null){
-        bar_chart.destroy();
-    }
+function artistsalbums(){
+    $.get("/api/artists/all", (artists, err) => {
+        if (err !== "success") console.error(err);
+        if (artists && Array.isArray(artists.data)) {
+            var insert_dates = [...new Set(artists.data.map(artist => artist.inserted_date))]
+            insert_dates.sort();
+            var latest_insert_date = insert_dates[0]
+            var artists_name = []
+            for(var i=0; i<artists.data.length;i++)
+            {
+                if((artists.data[i]["artist_rank"] == "1") && (artists.data[i]["inserted_date"] == latest_insert_date))
+                artists_name.push(artists.data[i]["artist_name"])
+            }
+            topalbumsbyartists(artists_name)
+        }
+    });
+}
+
+function topalbumsbyartists(artists_name){
+    $.get("/api/albums/all", (albums, err) => {
+        if (err !== "success") console.error(err);
+        if (albums && Array.isArray(albums.data)) {
+            var insert_dates = [...new Set(albums.data.map(album => album.inserted_date))]
+            const album_ctx = document.getElementById('albums').getContext('2d');
+            var album_date_count = []
+            var album_count = {}
+            var album_artist = []
+            var count = 0
+            var options = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            offsetGridLines: false
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            offsetGridLines: false
+                        }
+                    }]
+                },
+                title: {
+                  display: false,
+                  position: "top",
+                  text: "Bar Graph",
+                  fontSize: 18,
+                  fontColor: "#111"
+                },
+                legend: {
+                  display: true,
+                  position: "bottom"
+                },
+                scales: {
+                  yAxes: [{
+                    ticks: {
+                      min: 0
+                    }
+                  }]
+                }
+              }
+            for(var i=0; i<insert_dates.length;i++)
+            {
+                album_count = {}
+                album_date_count = []
+                for(var j=0; j<artists_name.length;j++)
+                {
+                    count = 0
+                    for(var k=0; k<albums.data.length;k++)
+                    {
+                        if((albums.data[k]["artist_name"] == artists_name[j]) && (albums.data[k]["inserted_date"] == insert_dates[i]))
+                        {
+                            count++
+                        }
+                    }
+                    album_date_count.push(count)
+                }
+                album_count.label = insert_dates[i]
+                album_count.data = album_date_count
+                album_count.backgroundColor = colors[i+4]
+				album_count.borderColor = colors[i+4]
+				album_count.borderWidth = 1
+                album_artist.push(album_count)
+
+            }
+            create_bar_chart(album_ctx, artists_name, album_artist, options)
+        }
+    });
+}
+
+function create_bar_chart(ctx, data_labels, dataset, options){
+
     bar_chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: data_labels,
             datasets: dataset
         },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    },
-                    gridLines: {
-                        offsetGridLines: false
-                    }
-                }],
-                xAxes: [{
-                    gridLines: {
-                        offsetGridLines: false
-                    }
-                }]
-            },
-            title: {
-              display: false,
-              position: "top",
-              text: "Bar Graph",
-              fontSize: 18,
-              fontColor: "#111"
-            },
-            legend: {
-              display: false,
-              position: "bottom",
-              labels: {
-                fontColor: "#333",
-                fontSize: 16
-              }
-            },
-            scales: {
-              yAxes: [{
-                ticks: {
-                  min: 0
-                }
-              }]
-            }
-          }
+        options: options
     });
 }
+
+
