@@ -18,6 +18,8 @@
     display: flex;
     flex-flow: row;
     margin-bottom: 0px;
+    height: auto;
+    width: auto;
 }
 
 .imagediv {
@@ -97,6 +99,8 @@ nav li a:hover:not(.active) {
 .bar{
   margin-left:4px;
   margin-right:4px;
+  height: auto;
+  width: auto;
 }
 
 .queryform ul{
@@ -111,7 +115,7 @@ nav li a:hover:not(.active) {
 }
 
 .queryform{
-  margin-left: 500px;
+  margin-left: 580px;
 }
 
 .querybar {
@@ -120,12 +124,15 @@ nav li a:hover:not(.active) {
   margin: 5px 5px 5px 5px;
   text-align: center;
   padding: 5px;
+  height: auto;
+  width: auto;
 }
 .querybar select {
   color: black;
   padding: 2px;
   padding-left:5px;
-  width: 250px;
+  padding-right:10px;
+  width: 250px auto;
   border: none;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
   -webkit-appearance: button;
@@ -133,6 +140,7 @@ nav li a:hover:not(.active) {
   text-align: center;
   font-size: medium;
   margin-left: 6px;
+  height: auto;
 }
 
 .genreheading{
@@ -152,7 +160,7 @@ nav li a:hover:not(.active) {
 .listwraper {
   display: flex;
   flex-flow: row;
-  height: 80px;
+  height: 80px auto;
   margin-bottom: 10px;
   margin-top: 25px;
   width: auto;
@@ -190,6 +198,8 @@ text-align: center;
     margin-bottom: 20px;
     padding-left: 5px;
     padding-right: 5px;
+    height: auto;
+    width: auto;
 }
 
 .img1,.img2,.img3,.img4 {

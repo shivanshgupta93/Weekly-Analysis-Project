@@ -8,14 +8,15 @@
 
       display: flex;
       flex-flow: row;
-      height: 690px;
+      height: 690px auto;
       margin-left: 10px;
       margin-right: 10px;
       margin-bottom: 40px;
+      width: auto;
   }
 
 .aboutproject {
-    height: 700px;
+    height: 700px auto;
     width: 48%;
     border-width:2px;
     border-style:solid;
@@ -26,7 +27,7 @@
 
 .aboutteam {
   flex-grow: 1;
-  height: 700px;
+  height: 700px auto;
   width: 48%;
   border-width:2px;
   border-style:solid;
